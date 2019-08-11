@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { YellowBox } from 'react-native';
 import Home from './components/screens/Home';
 import Search from './components/screens/Search';
+import Browse from './components/screens/Browse';
 
 YellowBox.ignoreWarnings(['Remote debugger']);
 
@@ -16,11 +17,13 @@ const client = new ApolloClient({
 const iconNames = {
   Home: 'home',
   Search: 'search',
+  Browse: 'list',
 };
 
 const TabNavigator = createBottomTabNavigator({
   Home,
   Search,
+  Browse,
 },
 {
   defaultNavigationOptions: ({ navigation }) => ({
