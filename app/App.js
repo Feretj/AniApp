@@ -4,9 +4,11 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { YellowBox } from 'react-native';
+import { ThemeProvider } from 'styled-components/native';
 import Home from './components/screens/Home';
 import Search from './components/screens/Search';
 import Browse from './components/screens/Browse';
+import theme from './theme.json';
 
 YellowBox.ignoreWarnings(['Remote debugger']);
 
@@ -21,8 +23,6 @@ const iconNames = {
 };
 
 const TabNavigator = createBottomTabNavigator({
-  Home,
-  Search,
   Browse,
 },
 {
@@ -33,11 +33,11 @@ const TabNavigator = createBottomTabNavigator({
     },
   }),
   tabBarOptions: {
-    activeTintColor: 'tomato',
-    inactiveTintColor: 'gray',
+    activeTintColor: theme.color.text.blue,
+    inactiveTintColor: theme.color.text.main,
   },
 });
 
 const AppContainer = createAppContainer(TabNavigator);
-const App = () => <ApolloProvider client={client}><AppContainer /></ApolloProvider>;
+const App = () => <ThemeProvider theme={theme}><ApolloProvider client={client}><AppContainer /></ApolloProvider></ThemeProvider>;
 export default App;

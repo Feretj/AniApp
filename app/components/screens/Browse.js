@@ -1,14 +1,17 @@
 import React from 'react';
 import {
   SafeAreaView,
-  SectionList,
   Text,
   StatusBar,
   ActivityIndicator,
 } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
+import { ThemeContext } from 'styled-components/native';
 import { GET_BROWSE } from '../../queries';
 import Media from '../Media';
+import {
+  SectionHeaderText, SectionList, ItemSeparator, SectionHeader, MainView, MainViewCenter,
+} from './Browse.style';
 
 const Home = () => {
   const { loading, error, data } = useQuery(GET_BROWSE, {
@@ -21,17 +24,17 @@ const Home = () => {
       type: 'ANIME',
     },
   });
-  if (loading) return <ActivityIndicator />;
+  if (loading) return <MainViewCenter><ThemeContext.Consumer>{(theme) => <ActivityIndicator color={theme.color.text.blue} size={40} />}</ThemeContext.Consumer></MainViewCenter>;
   if (error) return <Text>Error :(</Text>;
   console.log(data);
   return (
     <>
       <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
+      <MainView>
         <SectionList
-          renderItem={({ item }) => <Media coverImage={item.coverImage.large} title={item.title.userPreferred} studio={item.studios.edges[0].node.name} />}
+          renderItem={({ item }) => <Media item={item} />}
           renderSectionHeader={({ section: { title } }) => (
-            <Text>{title}</Text>
+            <SectionHeader><SectionHeaderText>{title}</SectionHeaderText></SectionHeader>
           )}
           sections={[
             { title: 'Popular This Season', data: data.Popular_This_Season.media },
@@ -40,8 +43,10 @@ const Home = () => {
             { title: 'All Time Popular', data: data.All_Time_Popular.media },
           ]}
           keyExtractor={(item) => item.id}
+          ItemSeparatorComponent={ItemSeparator}
+          ListFooterComponent={ItemSeparator}
         />
-      </SafeAreaView>
+      </MainView>
     </>
   );
 };
