@@ -1,13 +1,11 @@
-import React from 'react';
-import {
-  createBottomTabNavigator,
-  createAppContainer,
-  createStackNavigator,
-} from 'react-navigation';
-import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
-import Icon from 'react-native-vector-icons/Ionicons';
+import ApolloClient from 'apollo-boost';
+import React from 'react';
 import { YellowBox } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { ThemeProvider } from 'styled-components/native';
 import BrowseScreen from './components/screens/BrowseScreen';
 import MediaScreen from './components/screens/MediaScreen';

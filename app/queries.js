@@ -64,12 +64,7 @@ export const GET_GENRES_AND_TAGS = gql`
 `;
 
 export const GET_BROWSE = gql`
-  query getBrowse(
-    $thisSeason: MediaSeason
-    $thisYear: Int
-    $nextSeason: MediaSeason
-    $nextYear: Int
-  ) {
+  query getBrowse($thisSeason: MediaSeason, $thisYear: Int, $nextSeason: MediaSeason, $nextYear: Int) {
     Popular_This_Season: Page(page: 1, perPage: 4) {
       media(
         season: $thisSeason
@@ -83,13 +78,7 @@ export const GET_BROWSE = gql`
       }
     }
     Highly_Anticipated_Next_Season: Page(page: 1, perPage: 4) {
-      media(
-        season: $nextSeason
-        seasonYear: $nextYear
-        sort: POPULARITY_DESC
-        type: ANIME
-        isAdult: false
-      ) {
+      media(season: $nextSeason, seasonYear: $nextYear, sort: POPULARITY_DESC, type: ANIME, isAdult: false) {
         ...media
       }
     }

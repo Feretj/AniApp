@@ -26,18 +26,25 @@ const BrowseScreen = () => {
   });
   if (loading) {
     return (
-      <MainViewCenter>
+      <>
         <ThemeContext.Consumer>
-          {(theme) => <ActivityIndicator color={theme.color.text.blue} size={40} />}
+          {(theme) => <StatusBar backgroundColor={theme.color.foreground.blueDark} barStyle="dark-content" />}
         </ThemeContext.Consumer>
-      </MainViewCenter>
+        <MainViewCenter>
+          <ThemeContext.Consumer>
+            {(theme) => <ActivityIndicator color={theme.color.text.blue} size={40} />}
+          </ThemeContext.Consumer>
+        </MainViewCenter>
+      </>
     );
   }
   if (error) return <Text>Error :(</Text>;
   console.log(data);
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <ThemeContext.Consumer>
+        {(theme) => <StatusBar backgroundColor={theme.color.foreground.blueDark} barStyle="dark-content" />}
+      </ThemeContext.Consumer>
       <MainView>
         <SectionList
           renderItem={({ item }) => <Media item={item} />}

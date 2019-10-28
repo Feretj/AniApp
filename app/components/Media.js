@@ -21,9 +21,7 @@ import {
 const Media = ({ item, navigation }) => {
   const timeUntilAiring = item.nextAiringEpisode && moment.duration(item.nextAiringEpisode.timeUntilAiring, 'seconds');
   return (
-    <MediaConteiner
-      onPress={() => navigation.navigate('Media', { title: item.title.userPreferred, id: item.id })}
-    >
+    <MediaConteiner onPress={() => navigation.navigate('Media', { title: item.title.userPreferred, id: item.id })}>
       <Cover source={{ uri: item.coverImage.large }}>
         <CoverInfo>
           <Title>{item.title.userPreferred}</Title>

@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  ScrollView, View, Text, StatusBar, ActivityIndicator,
-} from 'react-native';
+import { ScrollView, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_MEDIA } from '../../queries';
 
@@ -17,14 +15,11 @@ const MediaScreen = ({ navigation }) => {
   console.log(data);
 
   return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <View>
-        <ScrollView contentInsetAdjustmentBehavior="automatic">
-          <Text>{data.media.title.userPreferred}</Text>
-        </ScrollView>
-      </View>
-    </>
+    <View>
+      <ScrollView contentInsetAdjustmentBehavior="automatic">
+        <Text>{data.media.title.userPreferred}</Text>
+      </ScrollView>
+    </View>
   );
 };
 
