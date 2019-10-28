@@ -3,6 +3,7 @@ import { TouchableWithoutFeedback } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
 import { withNavigation } from 'react-navigation';
+import { useQuery } from '@apollo/react-hooks';
 import {
   MediaConteiner,
   Cover,
@@ -17,14 +18,18 @@ import {
   Extra,
   ExtraText,
 } from './Media.style';
+import { GET_SETTINGS } from '../queries';
 
 const Media = ({ item, navigation }) => {
+  const { data } = useQuery(GET_SETTINGS);
   const timeUntilAiring = item.nextAiringEpisode && moment.duration(item.nextAiringEpisode.timeUntilAiring, 'seconds');
   return (
-    <MediaConteiner onPress={() => navigation.navigate('Media', { title: item.title.userPreferred, id: item.id })}>
+    <MediaConteiner
+      onPress={() => navigation.navigate('Media', { title: item.title[data.settings.titleLang], id: item.id })}
+    >
       <Cover source={{ uri: item.coverImage.large }}>
         <CoverInfo>
-          <Title>{item.title.userPreferred}</Title>
+          <Title>{item.title[data.settings.titleLang]}</Title>
           <Studio>{item.studios.edges[0].node.name}</Studio>
         </CoverInfo>
       </Cover>

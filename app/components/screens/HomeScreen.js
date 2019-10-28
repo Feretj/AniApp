@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, View, Text, StatusBar, ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const Home = () => {
   const { loading, error, data } = useQuery(

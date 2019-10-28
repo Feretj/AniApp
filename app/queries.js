@@ -1,11 +1,13 @@
-import { gql } from 'apollo-boost';
+import gql from 'graphql-tag';
 
 const fragments = {
   media: gql`
     fragment media on Media {
       id
       title {
-        userPreferred
+        romaji
+        english
+        native
       }
       coverImage {
         large: extraLarge
@@ -105,4 +107,12 @@ export const GET_MEDIA = gql`
   }
 
   ${fragments.media}
+`;
+
+export const GET_SETTINGS = gql`
+  {
+    settings @client {
+      titleLang
+    }
+  }
 `;

@@ -17,7 +17,7 @@ const MediaScreen = ({ navigation }) => {
   return (
     <View>
       <ScrollView contentInsetAdjustmentBehavior="automatic">
-        <Text>{data.media.title.userPreferred}</Text>
+        <Text>{data.media.title.english}</Text>
       </ScrollView>
     </View>
   );
