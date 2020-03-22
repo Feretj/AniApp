@@ -14,7 +14,7 @@ import { ActivityIndicator, YellowBox } from 'react-native';
 import 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { ThemeProvider } from 'styled-components/native';
-import BrowseScreen from './components/screens/BrowseScreen';
+import SearchScreen from './components/screens/SearchScreen';
 import MediaScreen from './components/screens/MediaScreen';
 import SettingsScreen from './components/screens/SettingsScreen';
 import { resolvers, typeDefs } from './resolvers';
@@ -23,18 +23,18 @@ import theme from './theme.json';
 YellowBox.ignoreWarnings(['Remote debugger']);
 
 const iconNames = {
-  Browse: 'list',
+  Search: 'search',
   Settings: 'settings',
 };
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const BrowseStackScreen = () => (
-  <Stack.Navigator initialRouteName="Browse">
+const SearchStackScreen = () => (
+  <Stack.Navigator initialRouteName="Search">
     <Stack.Screen
-      name="Browse"
-      component={BrowseScreen}
+      name="Search"
+      component={SearchScreen}
       options={{
         headerShown: false,
       }}
@@ -108,7 +108,7 @@ const App = () => {
               inactiveTintColor: theme.color.text.main,
             }}
           >
-            <Tab.Screen name="Browse" component={BrowseStackScreen} />
+            <Tab.Screen name="Search" component={SearchStackScreen} />
             <Tab.Screen name="Settings" component={SettingsScreen} />
           </Tab.Navigator>
         </NavigationContainer>
