@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 import HTMLView from 'react-native-htmlview';
 import moment from 'moment';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import {
   MediaConteiner,
@@ -20,9 +20,11 @@ import {
 } from './Media.style';
 import { GET_SETTINGS } from '../queries';
 
-const Media = ({ item, navigation }) => {
+const Media = ({ item }) => {
+  const navigation = useNavigation();
   const { data } = useQuery(GET_SETTINGS);
   const timeUntilAiring = item.nextAiringEpisode && moment.duration(item.nextAiringEpisode.timeUntilAiring, 'seconds');
+
   return (
     <MediaConteiner
       onPress={() => navigation.navigate('Media', { title: item.title[data.settings.titleLang], id: item.id })}
@@ -38,8 +40,8 @@ const Media = ({ item, navigation }) => {
           <InfoTimeText>
             {timeUntilAiring
               ? `Ep ${
-                item.nextAiringEpisode.episode
-              } - ${timeUntilAiring.days()}d ${timeUntilAiring.hours()}h ${timeUntilAiring.minutes()}m`
+                  item.nextAiringEpisode.episode
+                } - ${timeUntilAiring.days()}d ${timeUntilAiring.hours()}h ${timeUntilAiring.minutes()}m`
               : `${item.season} ${item.startDate.year}`}
           </InfoTimeText>
         </InfoTime>
@@ -63,4 +65,4 @@ const Media = ({ item, navigation }) => {
   );
 };
 
-export default withNavigation(Media);
+export default Media;

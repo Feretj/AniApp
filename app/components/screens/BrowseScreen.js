@@ -71,8 +71,4 @@ const BrowseScreen = () => {
   );
 };
 
-BrowseScreen.navigationOptions = {
-  header: null,
-};
-
 export default BrowseScreen;

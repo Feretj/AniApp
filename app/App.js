@@ -1,5 +1,8 @@
 import { ApolloProvider } from '@apollo/react-hooks';
 import AsyncStorage from '@react-native-community/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { persistCache } from 'apollo-cache-persist';
 import { ApolloClient } from 'apollo-client';
@@ -8,10 +11,8 @@ import { onError } from 'apollo-link-error';
 import { HttpLink } from 'apollo-link-http';
 import React from 'react';
 import { ActivityIndicator, YellowBox } from 'react-native';
+import 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { ThemeProvider } from 'styled-components/native';
 import BrowseScreen from './components/screens/BrowseScreen';
 import MediaScreen from './components/screens/MediaScreen';
@@ -26,31 +27,28 @@ const iconNames = {
   Settings: 'settings',
 };
 
-const BrowseStack = createStackNavigator({
-  Browse: BrowseScreen,
-  Media: MediaScreen,
-});
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-const TabNavigator = createBottomTabNavigator(
-  {
-    Browse: BrowseStack,
-    Settings: SettingsScreen,
-  },
-  {
-    defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ tintColor }) => {
-        const { routeName } = navigation.state;
-        return <Icon name={`ios-${iconNames[routeName]}`} size={25} color={tintColor} />;
-      },
-    }),
-    tabBarOptions: {
-      activeTintColor: theme.color.text.blue,
-      inactiveTintColor: theme.color.text.main,
-    },
-  },
+const BrowseStackScreen = () => (
+  <Stack.Navigator initialRouteName="Browse">
+    <Stack.Screen
+      name="Browse"
+      component={BrowseScreen}
+      options={{
+        headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="Media"
+      component={MediaScreen}
+      options={({ route }) => ({
+        title: route.params.title,
+      })}
+    />
+  </Stack.Navigator>
 );
 
-const AppContainer = createAppContainer(TabNavigator);
 const App = () => {
   const [client, setClient] = React.useState(null);
   React.useEffect(() => {
@@ -100,7 +98,20 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <ApolloProvider client={client}>
-        <AppContainer />
+        <NavigationContainer>
+          <Tab.Navigator
+            screenOptions={({ route }) => ({
+              tabBarIcon: ({ color, size }) => <Icon name={`ios-${iconNames[route.name]}`} size={size} color={color} />,
+            })}
+            tabBarOptions={{
+              activeTintColor: theme.color.text.blue,
+              inactiveTintColor: theme.color.text.main,
+            }}
+          >
+            <Tab.Screen name="Browse" component={BrowseStackScreen} />
+            <Tab.Screen name="Settings" component={SettingsScreen} />
+          </Tab.Navigator>
+        </NavigationContainer>
       </ApolloProvider>
     </ThemeProvider>
   );

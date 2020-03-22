@@ -3,10 +3,10 @@ import { ScrollView, View, Text, ActivityIndicator } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { GET_MEDIA } from '../../queries';
 
-const MediaScreen = ({ navigation }) => {
+const MediaScreen = ({ route }) => {
   const { loading, error, data } = useQuery(GET_MEDIA, {
     variables: {
-      id: navigation.getParam('id'),
+      id: route.params.id,
     },
   });
   if (loading) return <ActivityIndicator />;
@@ -22,9 +22,5 @@ const MediaScreen = ({ navigation }) => {
     </View>
   );
 };
-
-MediaScreen.navigationOptions = ({ navigation }) => ({
-  title: navigation.getParam('title'),
-});
 
 export default MediaScreen;
